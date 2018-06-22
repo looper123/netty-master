@@ -1,19 +1,23 @@
-package com.quark.netty.handler.simple;
+package com.quark.netty.handler.decoder.fixedLength;
 
-import com.quark.netty.handler.halfPkgDecoder.TimeClientHandler1;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * Created by ZhenpengLu on 2018/6/21.
  * netty 时间服务器客户端
  */
-public class TimeClient {
+public class TimeClient3 {
 
     public void connect(int port,String host) throws InterruptedException {
 //        配置客户端NIO线程组
@@ -24,7 +28,10 @@ public class TimeClient {
                     .option(ChannelOption.TCP_NODELAY,true)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new TimeClientHandler1());
+//                            新增解码器
+                            ch.pipeline().addLast(new FixedLengthFrameDecoder(20));
+                            ch.pipeline().addLast(new StringDecoder());
+                            ch.pipeline().addLast(new TimeClientHandler3());
                         }
                     });
 //        发起异步连接操作
@@ -47,6 +54,6 @@ public class TimeClient {
                 e.printStackTrace();
             }
         }
-        new TimeClient().connect(port,"127.0.0.1");
+        new TimeClient3().connect(port,"127.0.0.1");
     }
 }

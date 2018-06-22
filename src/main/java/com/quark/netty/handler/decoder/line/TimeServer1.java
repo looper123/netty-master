@@ -1,6 +1,5 @@
-package com.quark.netty.handler.simple;
+package com.quark.netty.handler.decoder.line;
 
-import com.quark.netty.handler.halfPkgDecoder.TimeServerHandler1;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,12 +7,14 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * Created by ZhenpengLu on 2018/5/31.
- * netty 时间服务器服务端
+ * netty 时间服务器服务端 使用netty的半包解码器解决 粘包/拆包的问题
  */
-public class TimeServer {
+public class TimeServer1 {
 
     public void bind(int port) throws InterruptedException {
 //        服务端的NIO线程组 一个用于接收客户端连接 一个用于socketchannel读写
@@ -29,7 +30,10 @@ public class TimeServer {
 //                    .childHandler(new ChildChannelHand());
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new TimeServerHandler());
+                            //新增LineBasedFrameDecoder和StringDecoder解码器
+                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                            socketChannel.pipeline().addLast(new StringDecoder());
+                            socketChannel.pipeline().addLast(new TimeServerHandler1());
                         }
                     });
 //            绑定端口，同步等待成功
@@ -46,7 +50,7 @@ public class TimeServer {
 
 //    private class ChildChannelHand extends ChannelInitializer<SocketChannel> {
 //        protected void initChannel(SocketChannel socketChannel) throws Exception {
-//            socketChannel.pipeline().addLast(new TimeServerHandler1());
+//            socketChannel.pipeline().addLast(new TimeServerHandler3());
 //        }
 //    }
 
@@ -60,7 +64,7 @@ public class TimeServer {
                 e.printStackTrace();
             }
         }
-        new TimeServer().bind(port);
+        new TimeServer1().bind(port);
     }
 }
 

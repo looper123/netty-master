@@ -1,4 +1,4 @@
-package com.quark.netty.handler.halfPkgDecoder;
+package com.quark.netty.handler.decoder.line;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -21,6 +21,7 @@ public class TimeClientHandler1 extends ChannelHandlerAdapter {
 
     public TimeClientHandler1() {
         req = ("QUERY TIME ORDER" +System.getProperty("line.separator")).getBytes();
+//        req = ("QUERY TIME ORDER" +System.getProperty("line.separator")+"\n").getBytes();
     }
 
     //写入消息到缓冲区并且发送到socketchannel中

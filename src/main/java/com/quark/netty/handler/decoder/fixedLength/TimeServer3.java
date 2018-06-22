@@ -1,21 +1,23 @@
-package com.quark.netty.handler.halfPkgDecoder;
+package com.quark.netty.handler.decoder.fixedLength;
 
-import com.quark.netty.handler.simple.TimeServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * Created by ZhenpengLu on 2018/5/31.
  * netty 时间服务器服务端 使用netty的半包解码器解决 粘包/拆包的问题
  */
-public class TimeServer1 {
+public class TimeServer3 {
 
     public void bind(int port) throws InterruptedException {
 //        服务端的NIO线程组 一个用于接收客户端连接 一个用于socketchannel读写
@@ -31,10 +33,11 @@ public class TimeServer1 {
 //                    .childHandler(new ChildChannelHand());
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            //新增LineBasedFrameDecoder和StringDecoder解码器
-                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                            //新增DelimiterBasedFrameDecoder和StringDecoder解码器
+                            //定义固定包长度
+                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(20));
                             socketChannel.pipeline().addLast(new StringDecoder());
-                            socketChannel.pipeline().addLast(new TimeServerHandler1());
+                            socketChannel.pipeline().addLast(new TimeServerHandler3());
                         }
                     });
 //            绑定端口，同步等待成功
@@ -51,7 +54,7 @@ public class TimeServer1 {
 
 //    private class ChildChannelHand extends ChannelInitializer<SocketChannel> {
 //        protected void initChannel(SocketChannel socketChannel) throws Exception {
-//            socketChannel.pipeline().addLast(new TimeServerHandler1());
+//            socketChannel.pipeline().addLast(new TimeServerHandler3());
 //        }
 //    }
 
@@ -65,7 +68,7 @@ public class TimeServer1 {
                 e.printStackTrace();
             }
         }
-        new TimeServer1().bind(port);
+        new TimeServer3().bind(port);
     }
 }
 

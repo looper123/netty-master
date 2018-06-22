@@ -1,4 +1,4 @@
-package com.quark.netty.handler.simple;
+package com.quark.netty.handler.withoutDecoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

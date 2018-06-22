@@ -1,4 +1,4 @@
-package com.quark.netty.handler.halfPkgDecoder;
+package com.quark.netty.handler.decoder.delimiter;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
  * Created by ZhenpengLu on 2018/5/31.
  * netty 自定义时间服务器服务端handler
  */
-public class TimeServerHandler1 extends ChannelHandlerAdapter {
+public class TimeServerHandler2 extends ChannelHandlerAdapter {
 
     //统计服务端收到客户端的消息总数
     private int counter;
@@ -26,12 +26,9 @@ public class TimeServerHandler1 extends ChannelHandlerAdapter {
 //        String body = new String(req,"UTF-8").substring(0,req.length-System.getProperty("line.separator").length());
         String body = (String)msg;
         System.out.println("the time netty receive the order :"+body+": the count is :"+  ++counter);
-//         如果请求信息包含了QUERY TIME ORDER 则创建应答信息
-        String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body)?
-                new java.util.Date(System.currentTimeMillis()).toString():"BAD ORDER";
-        currentTime = currentTime + System.getProperty("line.separator");
-        ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
-        ctx.write(resp);
+        body +="$_";
+        ByteBuf echo = Unpooled.copiedBuffer(body.getBytes());
+        ctx.write(echo);
     }
 
     //通道读取完毕 把消息发送队列中的消息写入到socketchannel中发送给对方
