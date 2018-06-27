@@ -1,12 +1,18 @@
 package com.quark.netty.customerProtocol;
 
 
+import org.msgpack.annotation.Message;
+
+import java.io.Serializable;
 
 /**
  * Created by ZhenpengLu on 2018/6/26.
  * netty协议实体类
  */
-public final class NettyMessage {
+@Message
+public final class NettyMessage implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Header header;
 
@@ -28,10 +34,10 @@ public final class NettyMessage {
         this.body = body;
     }
 
-    @Override
-    public String toString() {
-        return "NettyMessage{" +
-                "header=" + header +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "NettyMessage{" +
+//                "header=" + header +
+//                '}';
+//    }
 }

@@ -19,6 +19,7 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("loginAuthresponse reveive msg:"+msg);
         NettyMessage message = (NettyMessage) msg;
 //        如果是握手请求消息 进行处理 ，其他消息透传
         if (message.getHeader() != null && message.getHeader().getType() == MessageType.HEARTBEAT_REQ.getValue()) {

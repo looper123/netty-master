@@ -24,6 +24,7 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        System.out.println("loginAuthrequst reveive msg:"+msg);
         NettyMessage message = (NettyMessage) msg;
 //        如果握手应答消息 需要判断是否认证成功
         if (message.getHeader() != null && message.getHeader().getType() == MessageType.LOGIN_RESP.getValue()) {

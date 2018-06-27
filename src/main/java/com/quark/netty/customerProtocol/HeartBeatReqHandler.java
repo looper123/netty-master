@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 public class HeartBeatReqHandler extends ChannelHandlerAdapter {
+
     private volatile ScheduledFuture<?> heartBeat;
 
     @Override
