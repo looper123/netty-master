@@ -1,4 +1,4 @@
-package com.quark.netty.customerProtocol;
+package com.quark.netty.handler.customerProtocol;
 
 /**
  * Created by ZhenpengLu on 2018/6/27.

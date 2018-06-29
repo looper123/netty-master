@@ -1,10 +1,9 @@
-package com.quark.netty.customerProtocol;
+package com.quark.netty.handler.customerProtocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import io.netty.handler.codec.marshalling.MarshallingEncoder;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.quark.netty.customerProtocol;
+package com.quark.netty.handler.customerProtocol;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;

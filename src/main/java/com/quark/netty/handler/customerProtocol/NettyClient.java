@@ -1,10 +1,5 @@
-package com.quark.netty.customerProtocol;
+package com.quark.netty.handler.customerProtocol;
 
-import com.quark.netty.handler.marshalling.MarshallingCodecFactory;
-import com.quark.netty.handler.msgPack.MsgPackDecoder;
-import com.quark.netty.handler.msgPack.MsgPackEncoder;
-import com.quark.netty.handler.msgPack.TimeClientHandler4;
-import com.quark.netty.handler.protobuf.TimeClientHandler5;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -12,10 +7,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.marshalling.MarshallingDecoder;
-import io.netty.handler.codec.marshalling.MarshallingEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
