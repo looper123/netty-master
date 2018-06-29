@@ -1,8 +1,7 @@
 package com.quark.netty.customerProtocol;
 
-import com.quark.netty.handler.msgPack.MsgPackDecoder;
-import com.quark.netty.handler.msgPack.MsgPackEncoder;
-import com.quark.netty.handler.msgPack.TimeServerHandler4;
+import com.quark.netty.handler.marshalling.MarshallingCodecFactory;
+import com.quark.netty.handler.protobuf.TimeServerHandler5;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -10,8 +9,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -31,6 +28,7 @@ public class NettyServer {
 //            绑定启动类需要的参数
         serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
+//                内核为此套接口排队的最大连接数 （已连接队列 （完成了三次握手）+ 未连接队列（三次握手未全部完成） ）
                 .option(ChannelOption.SO_BACKLOG, 100)
                 .handler(new LoggingHandler(LogLevel.INFO))
                 .childHandler(new ChannelInitializer<SocketChannel>() {

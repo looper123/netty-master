@@ -42,7 +42,6 @@ public class TimeServer4 {
                             // msgpack编码器和解码器（自定义的编码解码器）
                             socketChannel.pipeline().addLast("msgpack decoder",new MsgPackDecoder());
                             socketChannel.pipeline().addLast("msgpack encoder",new MsgPackEncoder());
-                            socketChannel.pipeline().addLast();
                             socketChannel.pipeline().addLast(new TimeServerHandler4());
                         }
                     });
